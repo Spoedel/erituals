@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bas</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Initial Click-to-Enter Screen */
+        .welcome-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Main Page After Enter */
+        .main-content {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Background Image with Blur Effect */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit; /* Inherit the background image */
+            filter: blur(5px); /* Adjust blur strength */
+            z-index: -1;
+        }
+
+        /* Overlay Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.6); /* Slight overlay for better readability */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .title {
+            font-size: 60px; /* Default size for desktop */
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .description {
+            font-size: 20px; /* Default size for desktop */
+            margin: 10px 0 20px;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px; /* Default size for desktop */
+            color: white;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(60px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 40px; /* Smaller for mobile */
+            }
+
+            .description {
+                font-size: 16px;
+            }
+
+            .social-links a {
+                padding: 8px 15px;
+                font-size: 14px; /* Smaller text for buttons */
+            }
+
+            .music-player {
+                font-size: 14px; /* Slightly smaller player text */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" onclick="startSite()">
+        Click to enter
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="background"></div>
+        <div class="content">
+            <h1 class="title">Erituals ౨ৎ</h1>
+            <p class="description">Owner of /erituals<br>
+            <div class="social-links">
+                <a href="https://www.roblox.com/users/3121523927/profile" target="_blank">My Roblox</a>
+                <a href="https://discord.gg/Erituals" target="_blank">My Discord Server</a>
+            </div>
+        </div>
+        <div class="music-player">
+            <div>Now Playing: The Marias - No One Noticed</div>
+        </div>
+        <audio id="background-music" loop>
+            <source src="song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        function startSite() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const mainContent = document.querySelector('.main-content');
+
+            // Hide welcome screen
+            welcomeScreen.classList.add('hidden');
+
+            // Show main content after fade-out
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+
+                // Play background music
+                const music = document.getElementById('background-music');
+                music.play().catch(error => console.log('Autoplay blocked:', error));
+            }, 500); // Match fade-out duration
+        }
+    </script>
+</body>
+</html>
